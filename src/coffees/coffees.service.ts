@@ -24,7 +24,7 @@ export class CoffeesService {
     return coffee;
   }
 
-  create(createCoffeeDto: CreateCoffeeDto) {
+  create(createCoffeeDto: any) {
     this.coffees.push(createCoffeeDto);
   }
 
