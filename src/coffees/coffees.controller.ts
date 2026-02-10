@@ -6,11 +6,24 @@ import {
   Param,
   Post,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query/pagination-query.dto';
 
+// CONTROLLER
+// obsługuje HTTP (request / response),
+// odbiera dane z requesta,
+// woła logikę biznesową w serwisie,
+// nie robi logiki aplikacji.
+// @Post() → endpoint POST /coffees
+// @Body() → wyciąga body z requesta
+// przekazuje dane dalej do serwisu
+// zwraca wynik do klienta
+// Controller = brama HTTP.
+// Controller nie zapisuje do DB
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
@@ -28,8 +41,9 @@ export class CoffeesController {
   // localhost:3000/coffees?limit=5&offset=10
 
   @Get()
-  findAll() {
-    return this.coffeesService.findAll();
+  findAll(@Query() paginationQuery: PaginationQueryDto) {
+    // const { limit, offset } = paginationQuery;
+    return this.coffeesService.findAll(paginationQuery);
   }
   // @Get()
   // findAll(@Res() response) {
